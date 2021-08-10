@@ -1,11 +1,9 @@
-FROM python:3.9
+FROM python:3.8
 MAINTAINER Aiden
 
-RUN pip3 install pipenv
 WORKDIR /usr/src/app
 COPY . .
-RUN pipenv --three
-RUN pipenv install
+RUN pip3 install -r requirements.txt
 
 EXPOSE 8000
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
