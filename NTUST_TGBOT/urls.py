@@ -20,5 +20,5 @@ import courseQuery
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('courseQuary/', include(courseQuery.urls)),
+    path('api/', include('courseQuery.urls')),
 ]

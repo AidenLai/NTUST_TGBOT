@@ -1,2 +1,5 @@
 # pycharm config folder
 .idea
+
+# telegram bot token file
+courseQuery/token.txt
