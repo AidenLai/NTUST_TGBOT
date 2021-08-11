@@ -12,6 +12,7 @@ This repository contains:
 ## Table of Contents:
 - [Background](#background)
 - [Install](#install)
+- [Usage](#usage)
 - [Maintainer](#maintainer)
 
 ## Background
@@ -25,7 +26,20 @@ The goals for this repository are:
 3. To provide the notice of NTUST
 
 ## Install
-To establish this Telegram bot service, please refer [python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot) module
+To establish this Telegram bot service, please use the [Dockerfile](./Dockerfile) to build the image.
+
+You can use this command to build the image:
+
+`$ docker build -t tgbot . --no-cache`
+
+Then use this command to run the service:
+
+`$ docker run -p 8000:8000 -v /path/to/your/token.txt:/usr/src/app/courseQuery/token.txt -d --restart always tgbot`
+
+## Usage
+You can use the telegram bot we establish:
+
+[@Brandon_NTUST_Bot](https://t.me/Brandon_NTUST_Bot)
 
 ## Maintainer
 [@Aiden_Lai](https://github.com/AidenLai)
