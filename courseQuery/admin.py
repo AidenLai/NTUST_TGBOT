@@ -7,7 +7,7 @@ from courseQuery.models import User, Task
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    pass
+    list_display = ("chat_id",)
 
 
 @admin.register(Task)
