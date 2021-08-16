@@ -7,6 +7,7 @@ name = "pypi"
 django = "*"
 requests = "*"
 python-telegram-bot = "*"
+django-q = "*"
 
 [dev-packages]
 

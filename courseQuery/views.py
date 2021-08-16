@@ -114,10 +114,10 @@ def cancel(update: Update, context: CallbackContext) -> int:
 
 def task(update: Update, context: CallbackContext) -> int:
     """
-
-    :param update:
-    :param context:
-    :return:
+    The function to init the adding task
+    :param update: [telegram.update] The data update
+    :param context: [telegram.ext.CallbackContext] The message callback
+    :return: [int] The status code to the add_task
     """
     update.message.reply_text("Please input the code of the class you want!")
 
@@ -125,6 +125,12 @@ def task(update: Update, context: CallbackContext) -> int:
 
 
 def add_task(update: Update, context: CallbackContext) -> int:
+    """
+    The function to add the task
+    :param update: [telegram.update] The data update
+    :param context: [telegram.ext.CallbackContext] The message callback
+    :return: [int] The status code of END
+    """
     if User.objects.all().filter(chat_id=update.message.chat_id).count() == 0:
         user_record = User(chat_id=update.message.chat_id)
         user_record.save()
