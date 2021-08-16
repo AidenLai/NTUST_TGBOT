@@ -1,8 +1,6 @@
 from django.core.handlers.wsgi import WSGIRequest
 from django.shortcuts import render
 
-# Create your views here.
-
 import json
 import telegram
 from django.http import HttpResponse
@@ -12,6 +10,8 @@ from telegram.ext import Dispatcher, MessageHandler, Filters, CommandHandler, Ca
 
 # import the search course function
 from courseQuery.module_search_course import output_result, find_available, get_ntust_general_courses
+
+from courseQuery.models import User, Task
 
 # read the telegram bot token
 file = open("courseQuery/token.txt", 'r')
@@ -23,7 +23,7 @@ bot = telegram.Bot(token=token)
 dispatcher = Dispatcher(bot, None)
 
 
-SEARCHING = chr(1)  # setup the status code
+(SEARCHING, ADDING) = map(chr, range(2))  # setup the status code
 
 
 def reply_handler(update: Update, context: CallbackContext) -> None:
@@ -112,6 +112,45 @@ def cancel(update: Update, context: CallbackContext) -> int:
     return ConversationHandler.END
 
 
+def task(update: Update, context: CallbackContext) -> int:
+    """
+
+    :param update:
+    :param context:
+    :return:
+    """
+    update.message.reply_text("Please input the code of the class you want!")
+
+    return ADDING
+
+
+def add_task(update: Update, context: CallbackContext) -> int:
+    if User.objects.all().filter(chat_id=update.message.chat_id).count() == 0:
+        user_record = User(chat_id=update.message.chat_id)
+        user_record.save()
+
+    if Task.objects.all().filter(user__chat_id=update.message.chat_id).count() == 0:
+        task_record = Task(courseCode=update.message.text, user=User.objects.all().filter(chat_id=update.message.chat_id).get())
+        task_record.save()
+        update.message.reply_text("Task save!")
+    else:
+        update.message.reply_text("Record exist!")
+
+    return ConversationHandler.END
+
+
+# set the ConversationHandler for the adding task
+task_conv = ConversationHandler(
+    entry_points=[CommandHandler("task", task)],
+    states={
+        ADDING: [
+            MessageHandler(Filters.regex('[A-Z]{2}[A-Z0-9]{1}[0-9]{6}'), add_task),
+        ]
+    },
+    fallbacks=[CommandHandler("cancel", cancel)]
+)
+
+
 # set the ConversationHandler for the searching function conversation
 search_conv = ConversationHandler(
     entry_points=[CommandHandler("search", search)],
@@ -129,6 +168,7 @@ search_conv = ConversationHandler(
 dispatcher.add_handler(CommandHandler("start", start))
 dispatcher.add_handler(CommandHandler("course", search_course))
 dispatcher.add_handler(search_conv)
+dispatcher.add_handler(task_conv)
 dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, reply_handler))
 dispatcher.add_handler(MessageHandler(Filters.command, unknown_command))
 
