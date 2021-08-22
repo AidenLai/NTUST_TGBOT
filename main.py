@@ -1,7 +1,5 @@
-import json
 import time
-
-import telegram
+import os
 
 from telegram import Update
 from telegram.ext import Dispatcher, MessageHandler, Filters, CommandHandler, CallbackContext, ConversationHandler, \
@@ -107,9 +105,9 @@ def alarm(context: CallbackContext) -> None:
     :return: [int] The status code of END
     """
     job = context.job
-    while not check_available(job.name):
+    while not check_available(job.name.split(" ")[0]):
         time.sleep(10)
-    context.bot.send_message(job.context, text=f'Your course {job.name} is available now')
+    context.bot.send_message(job.context, text=f'Your course {job.name.split(" ")[0]} is available now')
 
 
 def remove_job_if_exists(name: str, context: CallbackContext) -> bool:
@@ -144,8 +142,8 @@ def add_task(update: Update, context: CallbackContext) -> int:
     chat_id = update.message.chat_id
     try:
         course_id = update.message.text
-        job_removed = remove_job_if_exists(str(chat_id), context)
-        context.job_queue.run_once(alarm, 5, context=chat_id, name=str(course_id))
+        job_removed = remove_job_if_exists(f'{str(course_id)} {chat_id}', context)
+        context.job_queue.run_once(alarm, 15, context=chat_id, name=f'{str(course_id)} {chat_id}')
 
         text = 'Timer successfully set!'
         if job_removed:
@@ -160,10 +158,14 @@ def add_task(update: Update, context: CallbackContext) -> int:
 
 if __name__ == '__main__':
 
+    '''
     # read the telegram bot token
     file = open("token.txt", 'r')
     token = file.read().splitlines()[0]
     file.close()
+    '''
+
+    token = os.getenv('TG_TOKEN')
 
     # set the bot and dispatcher
     updater = Updater(token)

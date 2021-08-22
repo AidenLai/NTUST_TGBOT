@@ -3,3 +3,6 @@
 
 # Telegram Bot token
 token.txt
+
+# Environment Variables
+.env
