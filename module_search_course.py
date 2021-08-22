@@ -105,6 +105,10 @@ def output_result(result):
     return str_out
 
 
+def check_available(code):
+    return code in [course['CourseNo'] for course in find_available(get_ntust_general_courses())]
+
+
 if __name__ == '__main__':
     for available_course in find_available(get_ntust_general_courses()):
         print(available_course['CourseName'])

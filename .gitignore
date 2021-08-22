@@ -1,5 +1,8 @@
-# pycharm config folder
+# IDE Folder
 .idea
 
-# telegram bot token file
-courseQuery/token.txt
+# Telegram Bot token
+token.txt
+
+# Environment Variables
+.env
