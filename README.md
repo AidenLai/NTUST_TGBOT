@@ -6,7 +6,7 @@ This Telegram Bot can help the students of NTUST search the available course eff
 This repository contains:
 
 1. The usage of this Telegram Bot
-2. A Django program of this project
+2. A native python-telegram-bot program of this project
 3. The guide of create the Bot service
 
 ## Table of Contents:
@@ -17,7 +17,7 @@ This repository contains:
 
 ## Background
 Because of the Course Searching system provided by NTUST does not have the quota inquire function,
-So we devoloped this Line bot to provide a platform that can inquire the course quota.
+So we devoloped this Telegram bot to provide a platform that can inquire the course quota.
 
 The goals for this repository are:
 
@@ -34,7 +34,7 @@ You can use this command to build the image:
 
 Then use this command to run the service:
 
-`$ docker run -p 8000:8000 -v /path/to/your/token.txt:/usr/src/app/courseQuery/token.txt -d --restart always tgbot`
+`$ docker run -e TG_TOKEN={YourBotToken} -d --restart always tgbot`
 
 ## Usage
 You can use the telegram bot we establish:
