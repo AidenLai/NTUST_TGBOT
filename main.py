@@ -6,7 +6,7 @@ from telegram.ext import Dispatcher, MessageHandler, Filters, CommandHandler, Ca
     Updater
 
 # import the search course function
-from module_search_course import output_result, find_available, get_ntust_general_courses, check_available
+from module_search_course import output_result, find_available, get_ntust_general_courses, check_available, find_mba_course
 
 
 (SEARCHING, ADDING) = map(chr, range(2))  # setup the status code
@@ -44,7 +44,7 @@ def search_course(update: Update, context: CallbackContext) -> None:
     :param context: [telegram.ext.CallbackContext] The message callback
     :return: None
     """
-    update.message.reply_text('目前尚有名額的課程:\n'+output_result(find_available(get_ntust_general_courses())))
+    update.message.reply_text('目前尚有名額的課程:\n'+output_result(find_available(get_ntust_general_courses()))+output_result(find_available(find_mba_course())))
 
 
 def unknown_command(update: Update, context: CallbackContext) -> None:

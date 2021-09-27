@@ -79,6 +79,24 @@ def get_ntu_system_courses():
     return search_courses(payload)
 
 
+def find_mba_course():
+    payload = {
+      "Semester": "1101",
+      "CourseNo": "MA",
+      "CourseName": "",
+      "CourseTeacher": "",
+      "Dimension": "",
+      "CourseNotes": "",
+      "ForeignLanguage": 0,
+      "OnlyGeneral": 0,
+      "OnleyNTUST": 0,
+      "OnlyUnderGraduate": 0,
+      "OnlyMaster": 0,
+      "Language": "zh",
+    }
+    return search_courses(payload)
+
+
 def find_available(courses):
     """
     Find out the available courses
@@ -106,7 +124,7 @@ def output_result(result):
 
 
 def check_available(code):
-    return code in [course['CourseNo'] for course in find_available(get_ntust_general_courses())]
+    return code in [course['CourseNo'] for course in find_available(get_ntust_general_courses() + find_mba_course())]
 
 
 if __name__ == '__main__':
