@@ -79,23 +79,6 @@ def get_ntu_system_courses():
     return search_courses(payload)
 
 
-def find_mba_course():
-    payload = {
-      "Semester": "1101",
-      "CourseNo": "MA",
-      "CourseName": "",
-      "CourseTeacher": "",
-      "Dimension": "",
-      "CourseNotes": "",
-      "ForeignLanguage": 0,
-      "OnlyGeneral": 0,
-      "OnleyNTUST": 0,
-      "OnlyUnderGraduate": 0,
-      "OnlyMaster": 0,
-      "Language": "zh",
-    }
-    return search_courses(payload)
-
 def get_all_course():
     """
     Get all ntust course data
