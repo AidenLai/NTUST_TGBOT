@@ -96,6 +96,26 @@ def find_mba_course():
     }
     return search_courses(payload)
 
+def get_all_course():
+    """
+    Get all ntust course data
+    :return: [List] The all ntust course data with json struct
+    """
+    payload = {
+        "CourseName": "",
+        "CourseNo": "",
+        "CourseNotes": "",
+        "CourseTeacher": "",
+        "Dimension": "",
+        "ForeignLanguage": 0,
+        "Language": "zh",
+        "OnleyNTUST": 1,
+        "OnlyGeneral": 0,
+        "OnlyMaster": 0,
+        "OnlyNode": 0,
+        "OnlyUnderGraduate": 1,
+        "Semester": "1111"
+    }
 
 def find_available(courses):
     """
@@ -124,7 +144,7 @@ def output_result(result):
 
 
 def check_available(code):
-    return code in [course['CourseNo'] for course in find_available(get_ntust_general_courses() + find_mba_course())]
+    return code in [course['CourseNo'] for course in find_available(get_all_course())]
 
 
 if __name__ == '__main__':
