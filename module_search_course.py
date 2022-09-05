@@ -99,6 +99,7 @@ def get_all_course():
         "OnlyUnderGraduate": 1,
         "Semester": "1111"
     }
+    return search_courses(payload)
 
 def find_available(courses):
     """
@@ -131,8 +132,12 @@ def check_available(code):
 
 
 if __name__ == '__main__':
+    for available_course in find_available(get_all_course()):
+        print(available_course['CourseName'])
+    """
     for available_course in find_available(get_ntust_general_courses()):
         print(available_course['CourseName'])
     print("-----NTU System-----")
     for available_course in find_available(get_ntu_system_courses()):
         print(available_course['CourseName'])
+    """
